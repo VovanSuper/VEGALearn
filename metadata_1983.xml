@@ -1,0 +1,65 @@
+<!DOCTYPE SYSTEM SYSTEM "metadata-SAMPLE_11.dtd">
+<SYSTEM id="1983" name="Тестовая конфигурация Овсюков В.А">
+	<MODULES id="Modules" name="Модули">
+		<MODULE id="ModuleVovan1983" name="Vovan Ovsyukov Test Module" menu="ModuleVovan1983" />
+	</MODULES>
+	<GROUPS_MENU name="Группы меню Vovan">
+		<MENU id="ModuleVovan1983" name="Меню модуля Vovan Module">
+			<MENU name="Файл">
+				<MI name="Параметры системы" formlist="Options"/>
+				<MI name="Загруженные файлы" formlist="Filelinks"/>
+				<MI type="line" />
+				<MI name="Выйти" actionlist="Exit"/>
+			</MENU>
+			<MENU name="Справочники">
+				<MI name="Users" formlist="Person" />
+			</MENU>
+			<MENU name="Sites">
+				<MI name="Сайт Menfin" actionlist="MenfinSiteRef" />
+			</MENU>
+			<MENU name="Forms">
+				<MI name="Направления работ" formlist="JobsDirections1983" />
+			</MENU>
+			<MENU name="Documents">
+				<MI name="Документы" formlist="Docs1983" />
+			</MENU>
+			<MENU>
+				<MI name="About" formlist="AboutForm1983" />
+			</MENU>
+		</MENU>
+	</GROUPS_MENU>
+	<ATTRIBUTES name="Атрибуты"/>
+	<GROUPS_ATTRIBUTES name="Группы атрибутов"/>
+	<TABLES name="Таблицы">
+		<TABLE id="JOBSDIRECTIONS1983" name="Jobs Directions (направления работ)" >
+			<A id="CODE" labelwidth="400" />
+			<A id="NAME"/>
+			<A id="USED" name="Используется в документах" caption="Используется в документах" labelwidth="100" type="boolean"  local="true"/>
+			<TI id="JOBSDIRECTIONS1983_UK" name="Направления работ с таким кодом уже существует" unique="CODE"/> 		
+		</TABLE>
+		<TABLE id="DOCS1983" name="Textual documents (текстовые документы)" >
+			<A id="DOCNUM" labelwidth="200" width="60" name="Номер документа" caption="Номер" type="string" local="true" nulls="false" />
+			<A id="DOCDATE" labelwidth="200" width="60" name="Дата документа" caption="Дата" type="date" local="true" nulls="false" formula="now()" />
+			<A id="YEAR_U" name="Учетный год" caption="Учетный год" labelwidth="100" type="int" len="4" local="true" formula="to_char(now(), 'YYYY')" />
+			<A id="NOTE" labelwidth="200" />
+		</TABLE>
+		<TABLE id="ABOUTUS1983" name="About us (info)" >
+			<A id="ABOUTTXT"  name="Info about us" caption="Info About Us" type="text" local="true"   />
+		</TABLE>
+	</TABLES>	
+	<ACTIONS name="Действия">
+		<ACTION id="MenfinSiteRef" name="Menfin Site" type="link" href="https://www.menfin.ru" visible="new" />
+	</ACTIONS>
+	<REPORTS name="Отчеты"/>
+	<FORMS id="Forms" name="Формы">
+		<FORM id="JobsDirections1983" name="Направления работ">
+			<GRID id="JobsDirections1983" name="Направления работ" table="JOBSDIRECTIONS1983" actionlist="Archive"></GRID>
+		</FORM>		
+		<FORM id="Docs1983" name="Текстовый документы">
+			<GRID id="Docs1983" name="Текстовый документы" table="DOCS1983"></GRID>
+		</FORM>
+		<FORM>
+			<GRID id="AboutForm1983" name="About us" readonly="true" table="ABOUTUS1983"></GRID>
+		</FORM>
+	</FORMS>
+</SYSTEM>

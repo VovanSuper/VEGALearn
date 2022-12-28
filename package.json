@@ -1,0 +1,24 @@
+{
+  "name": "menfin-proj",
+  "version": "0.0.1",
+  "description": "Automation for Learning MenFin structure",
+  "main": "index.js",
+  "scripts": {
+    "open": "cypress open"
+  },
+  "keywords": [
+    "menfin",
+    "Studies",
+    "Learning Project"
+  ],
+  "author": {
+    "email": "ovsyukov@yandex.com",
+    "name": "Vladimir O",
+    "url": "https://www.ovsyukov.ru"
+  },
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "cypress": "^12.2.0"
+  }
+}
