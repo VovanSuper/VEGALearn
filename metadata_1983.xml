@@ -11,7 +11,7 @@
 				<MI type="line" />
 				<MI name="Выйти" actionlist="Exit"/>
 			</MENU>
-			<MENU name="Справочники11">
+			<MENU name="Справочники">
 				<MI name="Users" formlist="Person" />
 			</MENU>
 			<MENU name="Sites">
@@ -40,6 +40,8 @@
 		<TABLE id="DOCS1983" name="Textual documents (текстовые документы)" >
 			<A id="DOCNUM" labelwidth="200" width="60" name="Номер документа" caption="Номер" type="string" local="true" nulls="false" />
 			<A id="DOCDATE" labelwidth="200" width="60" name="Дата документа" caption="Дата" type="date" local="true" nulls="false" formula="now()" />
+			<A id="PERSON_ID" name="Исполнитель" caption="Исполнитель" />
+			<A id="JOBSDIRECTIONS1983ID" name="Направления работ" caption="Направления работ" labelwidth="500" type="ref" table="JOBSDIRECTIONS1983" ret="CODE" form="JobsDirections1983" where="USED" local="true" />
 			<A id="YEAR_U" name="Учетный год" caption="Учетный год" labelwidth="100" type="int" len="4" local="true" formula="to_char(now(), 'YYYY')" />
 			<A id="NOTE" labelwidth="200" />
 		</TABLE>

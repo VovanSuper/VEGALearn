@@ -21,7 +21,7 @@
   "license": "ISC",
   "private": true,
   "devDependencies": {
-    "cypress": "^12.2.0",
+    "cypress": "^12.3.0",
     "cypress-network-idle": "^1.11.2",
     "cypress-watch-and-reload": "^1.10.5"
   }
