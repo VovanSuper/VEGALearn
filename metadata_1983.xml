@@ -51,15 +51,23 @@
 				<AI id="5" name="Friday" />
 				<AI id="6" name="Saturday" />
 			</A>
+			<A id="USED" name="Назначен исполнитель" caption="Назначен исполнитель" labelwidth="100" type="boolean" local="true">
+				<AI id="false" readonly="PERSON_ID" />
+			</A>
 			<A id="PERSON_ID" name="Исполнитель" caption="Исполнитель" />
 			<GA caption="Работы">
 				<A id="JOBSDIRECTIONS1983ID" name="Направления работ" caption="Направления работ" labelwidth="500" type="ref" table="JOBSDIRECTIONS1983" ret="CODE" form="JobsDirections1983" where="USED" local="true" />
 				<A id="JOBSDIRECTIONS1983_VIRT" name="Наименование" caption="Наименование" labelwidth="500" type="string" nulls="true" virtual="true" formula="select NAME from JOBSDIRECTIONS1983 where id = @JOBSDIRECTIONS1983ID" local="true" />
 			</GA>
 			<A id="YEAR_U" name="Учетный год" caption="Учетный год" labelwidth="100" type="int" len="4" local="true" formula="to_char(now(), 'YYYY')" />
+			<A id="STATUS" name="Статус" caption="Статус" labelwidth="500" type="list" visible="true" readonly="true" formula="0" value="0" local="true">
+				<AI id="0" name="Черновик" actionlist="MakeEntryDocDOC1983" />
+				<AI id="1" name="Отработан" actionlist="DeleteEntryDocDOC1983" />
+			</A>
 			<A id="NOTE" labelwidth="200" />
 			<A id="OKVED_ID" name="Виды деятельности" caption="Виды деятельности" array="true" labelwidth="500" />
 		</TABLE>
+
 		<TABLE id="ABOUTUS1983" name="About us (info)" >
 			<A id="ABOUTTXT"  name="Info about us" caption="Info About Us" type="text" local="true"  readonly="false" />
 		</TABLE>
@@ -78,17 +86,25 @@
 				<A id="DOCDATEVIRT" name="Дата загрузки файла" caption="Дата загрузки" labelwidth="500" type="date" nulls="true" visible="form" readonly="true" virtual="true" formula="select f.docdate from filelinks f where f.id = @FILELINKSID"/>
 			</GA>
 		</TABLE>
-	</TABLES>	
+	</TABLES>
+
 	<ACTIONS name="Действия">
 		<ACTION id="MenfinSiteRef" name="Menfin Site" type="link" href="https://www.menfin.ru" visible="new" />
+		<ACTION id="MakeEntryDOC1983" name="Отработать" type="procedure" procedure="p_action_set_status">
+			<P id="val" value="1" />
+		</ACTION>
+		<ACTION id="DeleteEntryDOC1983" name="Снять отработку" type="procedure" procedure="p_action_set_status">
+			<P id="val" value="0" />
+		</ACTION>
 	</ACTIONS>
+
 	<REPORTS name="Отчеты"/>
 	<FORMS id="Forms" name="Формы">
 		<FORM id="JobsDirections1983" name="Направления работ">
 			<GRID id="JobsDirections1983" name="Направления работ" table="JOBSDIRECTIONS1983" actionlist="Archive"></GRID>
 		</FORM>		
 		<FORM id="Docs1983" name="Текстовый документы">
-			<GRID id="Docs1983" name="Текстовый документы" table="DOCS1983"></GRID>
+			<GRID id="Docs1983" name="Текстовый документы" table="DOCS1983" actionlist="MakeEntryDocDOC1983;DeleteEntryDocDOC1983"></GRID>
 			<TABS name="FILES">
 				<TAB name="Спецификация">
 					<GRID id="Docsp1983" name="Спецификация Документа" table="DOCSP1983" />
