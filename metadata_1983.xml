@@ -23,6 +23,7 @@
 			</MENU>
 			<MENU name="Documents">
 				<MI name="Документы" formlist="Docs1983" />
+				<MI name="Документы (спецификации справа)" formlist="Doc_1983" />
 			</MENU>
 			<MENU name="Help">
 				<MI name="Руководство пользователя" actionlist="HelpNciUser"/>
@@ -51,8 +52,10 @@
 				<AI id="6" name="Saturday" />
 			</A>
 			<A id="PERSON_ID" name="Исполнитель" caption="Исполнитель" />
-			<A id="JOBSDIRECTIONS1983ID" name="Направления работ" caption="Направления работ" labelwidth="500" type="ref" table="JOBSDIRECTIONS1983" ret="CODE" form="JobsDirections1983" where="USED" local="true" />
-			<A id="JOBSDIRECTIONS1983_VIRT" name="Наименование" caption="Наименование" labelwidth="500" type="string" nulls="true" virtual="true" formula="select NAME from JOBSDIRECTIONS1983 where id = @JOBSDIRECTIONS1983ID" local="true" />
+			<GA caption="Работы">
+				<A id="JOBSDIRECTIONS1983ID" name="Направления работ" caption="Направления работ" labelwidth="500" type="ref" table="JOBSDIRECTIONS1983" ret="CODE" form="JobsDirections1983" where="USED" local="true" />
+				<A id="JOBSDIRECTIONS1983_VIRT" name="Наименование" caption="Наименование" labelwidth="500" type="string" nulls="true" virtual="true" formula="select NAME from JOBSDIRECTIONS1983 where id = @JOBSDIRECTIONS1983ID" local="true" />
+			</GA>
 			<A id="YEAR_U" name="Учетный год" caption="Учетный год" labelwidth="100" type="int" len="4" local="true" formula="to_char(now(), 'YYYY')" />
 			<A id="NOTE" labelwidth="200" />
 			<A id="OKVED_ID" name="Виды деятельности" caption="Виды деятельности" array="true" labelwidth="500" />
@@ -91,7 +94,7 @@
 					<GRID id="Docsp1983" name="Спецификация Документа" table="DOCSP1983" />
 				</TAB>
 				<TAB name="Файлы">
-					<GRID id="Docfile1983" name="фАЙЛЫ" table="DOCFILE1983">
+					<GRID id="Docfile1983" name="фАЙЛЫ" table="DOCFILE1983" readonly="true">
 						<MENU>
 							<MI actionlist="addFilelinks;Update;View;Delete;MoveFolder;ConfigTables;loadFilelinks" />
 						</MENU>
@@ -99,10 +102,22 @@
 				</TAB>
 			</TABS>
 		</FORM>
-
+		<FORM id="Doc_1983" name="Текстовые документы">
+			<TABS>
+				<TAB name="Текстовые документы">
+					<GRID id="Doc_1983" name="Текстовые документы" table="DOCS1983"></GRID>
+				</TAB>
+				<TAB name="Спецификации документа">
+					<A id="DOCNUM_VIRT" caption="Номер" labelwidth="100" width="50" type="string" readonly="true" virtual="true" formula="select DOCNUM from DOCS1983 where id = @DOC1983ID" local="true"></A>
+					<A id="DOCDATE_VIRT" caption="Дата" labelwidth="100" width="50" type="date" readonly="true" virtual="true" formula="select DOCDATE from DOCS1983 where id = @DOC1983ID" local="true"></A>
+					<GRID id="Docsp_1983" name="Спецификация документа" table="DOCSP1983"></GRID>
+				</TAB>
+			</TABS>
+		</FORM>
 
 		<FORM id="AboutUS1983">
 			<GRID id="AboutForm1983" name="About us" readonly="true" table="ABOUTUS1983"></GRID>
 		</FORM>
 	</FORMS>
 </SYSTEM>
+ 
