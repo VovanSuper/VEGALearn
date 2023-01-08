@@ -11,7 +11,7 @@
 				<MI type="line" />
 				<MI name="Выйти" actionlist="Exit"/>
 			</MENU>
-			<MENU name="Справочники">
+			<MENU name="Справочники11">
 				<MI name="Users" formlist="Person" />
 			</MENU>
 			<MENU name="Sites">
@@ -23,8 +23,8 @@
 			<MENU name="Documents">
 				<MI name="Документы" formlist="Docs1983" />
 			</MENU>
-			<MENU>
-				<MI name="About" formlist="AboutForm1983" />
+			<MENU name="Help">
+				<MI name="Руководство пользователя" actionlist="HelpNciUser"/>
 			</MENU>
 		</MENU>
 	</GROUPS_MENU>
@@ -32,9 +32,9 @@
 	<GROUPS_ATTRIBUTES name="Группы атрибутов"/>
 	<TABLES name="Таблицы">
 		<TABLE id="JOBSDIRECTIONS1983" name="Jobs Directions (направления работ)" >
-			<A id="CODE" labelwidth="400" />
+			<A id="CODE" labelwidth="500" />
 			<A id="NAME"/>
-			<A id="USED" name="Используется в документах" caption="Используется в документах" labelwidth="100" type="boolean"  local="true"/>
+			<A id="USED" name="Используется в документах" caption="Используется в документах" labelwidth="100" type="boolean"  local="true"  />
 			<TI id="JOBSDIRECTIONS1983_UK" name="Направления работ с таким кодом уже существует" unique="CODE"/> 		
 		</TABLE>
 		<TABLE id="DOCS1983" name="Textual documents (текстовые документы)" >
