@@ -44,6 +44,7 @@
 			<A id="JOBSDIRECTIONS1983ID" name="Направления работ" caption="Направления работ" labelwidth="500" type="ref" table="JOBSDIRECTIONS1983" ret="CODE" form="JobsDirections1983" where="USED" local="true" />
 			<A id="YEAR_U" name="Учетный год" caption="Учетный год" labelwidth="100" type="int" len="4" local="true" formula="to_char(now(), 'YYYY')" />
 			<A id="NOTE" labelwidth="200" />
+			<A id="OKVED_ID" name="Виды деятельности" caption="Виды деятельности" array="true" labelwidth="500" />
 		</TABLE>
 		<TABLE id="ABOUTUS1983" name="About us (info)" >
 			<A id="ABOUTTXT"  name="Info about us" caption="Info About Us" type="text" local="true"   />
