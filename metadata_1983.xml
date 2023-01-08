@@ -19,6 +19,7 @@
 			</MENU>
 			<MENU name="Forms">
 				<MI name="Направления работ" formlist="JobsDirections1983" />
+				<MI name="Files" formlist="Docs1983" />
 			</MENU>
 			<MENU name="Documents">
 				<MI name="Документы" formlist="Docs1983" />
@@ -40,14 +41,39 @@
 		<TABLE id="DOCS1983" name="Textual documents (текстовые документы)" >
 			<A id="DOCNUM" labelwidth="200" width="60" name="Номер документа" caption="Номер" type="string" local="true" nulls="false" />
 			<A id="DOCDATE" labelwidth="200" width="60" name="Дата документа" caption="Дата" type="date" local="true" nulls="false" formula="now()" />
+			<A id="DAY_WEEK_VIRT" name="День недели" caption="День недели" labelwidth="100" width="40" type="list" readonly="true" virtual="true" formula="to_char(@DOCDATE, 'D')" >
+				<AI id="0" name="Sunday" />
+				<AI id="1" name="Monday" />
+				<AI id="2" name="Tuesday" />
+				<AI id="3" name="Wednesday" />
+				<AI id="4" name="Thursday" />
+				<AI id="5" name="Friday" />
+				<AI id="6" name="Saturday" />
+			</A>
 			<A id="PERSON_ID" name="Исполнитель" caption="Исполнитель" />
 			<A id="JOBSDIRECTIONS1983ID" name="Направления работ" caption="Направления работ" labelwidth="500" type="ref" table="JOBSDIRECTIONS1983" ret="CODE" form="JobsDirections1983" where="USED" local="true" />
+			<A id="JOBSDIRECTIONS1983_VIRT" name="Наименование" caption="Наименование" labelwidth="500" type="string" nulls="true" virtual="true" formula="select NAME from JOBSDIRECTIONS1983 where id = @JOBSDIRECTIONS1983ID" local="true" />
 			<A id="YEAR_U" name="Учетный год" caption="Учетный год" labelwidth="100" type="int" len="4" local="true" formula="to_char(now(), 'YYYY')" />
 			<A id="NOTE" labelwidth="200" />
 			<A id="OKVED_ID" name="Виды деятельности" caption="Виды деятельности" array="true" labelwidth="500" />
 		</TABLE>
 		<TABLE id="ABOUTUS1983" name="About us (info)" >
-			<A id="ABOUTTXT"  name="Info about us" caption="Info About Us" type="text" local="true"   />
+			<A id="ABOUTTXT"  name="Info about us" caption="Info About Us" type="text" local="true"  readonly="false" />
+		</TABLE>
+		<TABLE id="DOCSP1983" name="Спецификация документа">
+			<A id="DOCSP1983ID" name="Спецификация документа" parentkey="cascade" type="ref" table="DOCS1983" ret="ID"></A>
+			<A id="NAME"></A>
+			<A id="NUM_DOCSP" name="Количество" caption="Количество" labelwidth="200" width="50" type="int" local="true"></A>
+			<A id="NUN_DOCSP" name="Сумма" caption="Сумма" labelwidth="200" width="50" type="number" len="18.2" local="true"></A>
+		</TABLE>
+		<TABLE id="DOCFILE1983" name="Файлы">
+			<A id="DOCS1983ID" name="Ссылка на документ" parentkey="cascade" type="ref" table="DOCS1983" ret="ID" />
+			<A id="DESCRIPTION" name="Описание" caption="Описание" type="text" nulls="true" />
+			<GA caption="Сведения о загруженном файле">
+				<A id="FILELINKSID" name="Имя файла" caption="Имя" readonly="true"/>
+				<A id="SIZEVIRT" name="Размер файла" caption="Размер" labelwidth="300" type="int" nulls="true" visible="form" readonly="true" virtual="true" formula="select f.size from filelinks f where f.id = @FILELINKSID"/>
+				<A id="DOCDATEVIRT" name="Дата загрузки файла" caption="Дата загрузки" labelwidth="500" type="date" nulls="true" visible="form" readonly="true" virtual="true" formula="select f.docdate from filelinks f where f.id = @FILELINKSID"/>
+			</GA>
 		</TABLE>
 	</TABLES>	
 	<ACTIONS name="Действия">
@@ -60,8 +86,22 @@
 		</FORM>		
 		<FORM id="Docs1983" name="Текстовый документы">
 			<GRID id="Docs1983" name="Текстовый документы" table="DOCS1983"></GRID>
+			<TABS name="FILES">
+				<TAB name="Спецификация">
+					<GRID id="Docsp1983" name="Спецификация Документа" table="DOCSP1983" />
+				</TAB>
+				<TAB name="Файлы">
+					<GRID id="Docfile1983" name="фАЙЛЫ" table="DOCFILE1983">
+						<MENU>
+							<MI actionlist="addFilelinks;Update;View;Delete;MoveFolder;ConfigTables;loadFilelinks" />
+						</MENU>
+					</GRID>
+				</TAB>
+			</TABS>
 		</FORM>
-		<FORM>
+
+
+		<FORM id="AboutUS1983">
 			<GRID id="AboutForm1983" name="About us" readonly="true" table="ABOUTUS1983"></GRID>
 		</FORM>
 	</FORMS>
