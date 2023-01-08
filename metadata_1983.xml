@@ -25,6 +25,12 @@
 				<MI name="Документы" formlist="Docs1983" />
 				<MI name="Документы (спецификации справа)" formlist="Doc_1983" />
 			</MENU>
+			<MENU name="Загрузка">
+				<MI  name="Загрузка направления работ" actionlist="from_JobDirections1983" />
+			</MENU>
+			<MENU name="Отчеты">
+				<MI name="Печать документов за период" reportlist="REPORT_DOCS1983" />
+			</MENU>
 			<MENU name="Help">
 				<MI name="Руководство пользователя" actionlist="HelpNciUser"/>
 			</MENU>
@@ -96,15 +102,28 @@
 		<ACTION id="DeleteEntryDOC1983" name="Снять отработку" type="procedure" procedure="p_action_set_status">
 			<P id="val" value="0" />
 		</ACTION>
+		<ACTION id="from_JobDirections1983" name="Загрузка направления работ" type="script" actionlist="LoadAndConvertFile" refresh="all">
+			<P id="convname" value="Загрузка направлнения работ1983"/>
+			<P id="errorone" value="true"/>
+		</ACTION>
 	</ACTIONS>
 
-	<REPORTS name="Отчеты"/>
+	<REPORTS name="Отчеты">
+		<REPORT id="REPORT_DOCS1983" name="Печать документов за период" type="report_excel" procedure="" template="">
+			<FORM name="Параметры отчета">
+				<A id="DATE_FROM" name="Дата отчета с" caption="Дата отчета с" labelwidth="220" width="50" type="date" nulls="false" visible="form" formula="to_date('01.10.'||to_char(now(),'YYYY'),'dd.mm.yyy')" local="true"></A>
+				<A id="DATE_TO" name="Дата отчета по" caption="Дата отчета по" labelwidth="220" width="50" type="date" nulls="false" visible="form" formula="now()" local="true"></A>
+			</FORM>
+		</REPORT>
+		<REPORT id="REPORT_DOC1983" name="Печать документа за период" type="report_excel" procedure="" template=""></REPORT>
+	</REPORTS>
+
 	<FORMS id="Forms" name="Формы">
 		<FORM id="JobsDirections1983" name="Направления работ">
 			<GRID id="JobsDirections1983" name="Направления работ" table="JOBSDIRECTIONS1983" actionlist="Archive"></GRID>
 		</FORM>		
 		<FORM id="Docs1983" name="Текстовый документы">
-			<GRID id="Docs1983" name="Текстовый документы" table="DOCS1983" actionlist="MakeEntryDocDOC1983;DeleteEntryDocDOC1983"></GRID>
+			<GRID id="Docs1983" name="Текстовый документы" table="DOCS1983" actionlist="MakeEntryDocDOC1983;DeleteEntryDocDOC1983" reportlist="REPORT_DOC1983"></GRID>
 			<TABS name="FILES">
 				<TAB name="Спецификация">
 					<GRID id="Docsp1983" name="Спецификация Документа" table="DOCSP1983" />
