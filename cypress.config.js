@@ -1,6 +1,6 @@
 const { defineConfig } = require("cypress");
 
-const chromePath = 'C:/Users/vovan/AppData/Local/Google/Chrome/Application/chrome.exe'
+// const chromePath = 'C:/Users/vovan/AppData/Local/Google/Chrome/Application/chrome.exe'
 
 module.exports = defineConfig({
   e2e: {
