@@ -3,18 +3,22 @@
 import "cypress-network-idle";
 import { join } from "path";
 
-const VegaURL = "/VegaPlusDEMO/login.html";
+const VegaURL = `/${Cypress.env("VegaDBName")}/login.html`;
 
-const MetaDataFileName = "metadata_1983.xml";
-const ModuleName = "Vovan Ovsyukov Test Module";
+const MetaDataFileName = Cypress.env("ModuleFileName");
+const ModuleName = Cypress.env("ModuleName");
+const name = Cypress.env("user");
+const pass = Cypress.env("pass");
+
+console.log({ name, pass });
 
 context("Files", () => {
   beforeEach(() => {
     cy.visit(VegaURL);
   });
 
-  it("should load the Vega and show login page", () => {
-    cy.login("ADMIN", "ADMIN");
+  it("should login as admin, upload metadata file, and login in the module", () => {
+    cy.login(name, pass);
 
     cy.get("#x-auto-0-input").get(".DNUDVB-j-l").click();
     cy.contains("Администратор").click();
@@ -35,6 +39,7 @@ context("Files", () => {
     cy.wait(400);
     cy.contains("Ok").click();
 
+    // cy.waitForNetworkIdle();
     cy.wait(25000);
 
     cy.contains("Результат выполнения:")
@@ -47,9 +52,9 @@ context("Files", () => {
       .click({ force: true });
 
     cy.wait(200);
-    
+
     cy.contains("Да").click({ force: true });
-    
+
     cy.get("#x-auto-0-input").get(".DNUDVB-j-l").click({ log: true });
     cy.contains(ModuleName).click();
     cy.wait(200);

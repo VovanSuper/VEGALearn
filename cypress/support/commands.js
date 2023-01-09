@@ -17,7 +17,7 @@ Cypress.Commands.add('login', (email, password) => {
   
   cy.wait(200);
 
- })
+ });
 //
 //
 // -- This is a child command --
